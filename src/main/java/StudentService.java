@@ -52,8 +52,15 @@ public class StudentService {
 		
 	}
 	
-	public static void delete() {
-
+	public static void delete(HttpServletRequest request) {
+		try {
+			String getid;
+			getid = Utils.getBody(request); 
+			String id = gson.fromJson(getid, Student.class).get_id().toString();
+			connection.getCollection().deleteOne(new Document("_id", id));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }

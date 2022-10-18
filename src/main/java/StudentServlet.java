@@ -35,6 +35,6 @@ public class StudentServlet extends HttpServlet {
 	
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		StudentService.delete();
+		StudentService.delete(request);
 	}
 }
