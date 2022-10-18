@@ -1,0 +1,10 @@
+<Context>
+    <Resource name="mongodb/mongoClient"
+              auth="Container"
+              type="com.mongodb.MongoClient"
+              closeMethod="close"
+              factory="com.mongodb.client.jndi.MongoClientFactory"
+              singleton="true"
+              connectionString="mongodb://localhost:29000"
+              />      
+</Context>
