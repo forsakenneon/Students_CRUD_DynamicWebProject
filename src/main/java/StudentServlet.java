@@ -30,7 +30,7 @@ public class StudentServlet extends HttpServlet {
 
 	protected void doPut(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+		StudentService.update(request);
 	}
 	
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response)

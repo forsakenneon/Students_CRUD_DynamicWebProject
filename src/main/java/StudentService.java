@@ -5,6 +5,7 @@ import org.bson.Document;
 
 import com.google.gson.Gson;
 import com.mongodb.client.MongoCursor;
+import com.mongodb.client.model.Updates;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.Data;
@@ -49,7 +50,14 @@ public class StudentService {
 	}
 	
 	public static void update(HttpServletRequest request) {
-		
+		try {
+			String getid;
+			getid = Utils.getBody(request); 
+			String id = gson.fromJson(getid, Student.class).get_id().toString();
+			connection.getCollection().updateOne(new Document("_id", id), Updates.set("firstName", "UPDATEDNAMEX"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public static void delete(HttpServletRequest request) {
