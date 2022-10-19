@@ -12,7 +12,6 @@ import lombok.Data;
 
 @Data
 public class StudentService {
-
 	private static MongoConnection connection = new MongoConnection();
 	private static Gson gson = new Gson();
 
@@ -70,5 +69,4 @@ public class StudentService {
 			e.printStackTrace();
 		}
 	}
-
 }

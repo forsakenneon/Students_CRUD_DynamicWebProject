@@ -15,8 +15,6 @@ public class StudentServlet extends HttpServlet {
 	public StudentServlet() {
 	}
 	
-	MongoConnection connection = new MongoConnection();
-	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		List<Student> students = StudentService.getAll();
