@@ -30,7 +30,7 @@ public class StudentService {
 		return students;
 	}
 
-	public static void add(HttpServletRequest request) {
+	public static void addOne(HttpServletRequest request) {
 		try {
 			String jsonstudent;
 			jsonstudent = Utils.getBody(request);
@@ -48,18 +48,23 @@ public class StudentService {
 		}
 	}
 	
-	public static void update(HttpServletRequest request) {
+	public static void updateOne(HttpServletRequest request) {
 		try {
-			String getid;
-			getid = Utils.getBody(request); 
-			String id = gson.fromJson(getid, Student.class).get_id().toString();
-			connection.getCollection().updateOne(new Document("_id", id), Updates.set("firstName", "UPDATEDNAMEX"));
+			String jsonstudent;
+			jsonstudent = Utils.getBody(request);
+			String id = gson.fromJson(jsonstudent, Student.class).get_id().toString();
+			String firstName = gson.fromJson(jsonstudent, Student.class).getFirstName().toString();
+			String middleName = gson.fromJson(jsonstudent, Student.class).getMiddleName().toString();
+			String lastName = gson.fromJson(jsonstudent, Student.class).getLastName().toString();
+			connection.getCollection().updateOne(new Document("_id", id), Updates.set("firstName", firstName));
+			connection.getCollection().updateOne(new Document("_id", id), Updates.set("middleName", middleName));
+			connection.getCollection().updateOne(new Document("_id", id), Updates.set("lastName", lastName));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public static void delete(HttpServletRequest request) {
+	public static void deleteOne(HttpServletRequest request) {
 		try {
 			String getid;
 			getid = Utils.getBody(request); 

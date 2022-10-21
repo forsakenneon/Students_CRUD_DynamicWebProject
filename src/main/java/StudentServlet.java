@@ -23,16 +23,16 @@ public class StudentServlet extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		StudentService.add(request);
+		StudentService.addOne(request);
 	}
 
 	protected void doPut(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		StudentService.update(request);
+		StudentService.updateOne(request);
 	}
 	
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		StudentService.delete(request);
+		StudentService.deleteOne(request);
 	}
 }
