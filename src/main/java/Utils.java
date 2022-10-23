@@ -10,7 +10,6 @@ import org.bson.codecs.pojo.PojoCodecProvider;
 
 import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoClients;
-import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -33,14 +32,6 @@ public class Utils {
 						CodecRegistries.fromProviders(PojoCodecProvider.builder().automatic(true).build())))
 				.getCollection("Students").find().iterator();
 		return cursor;
-	}
-
-	public static MongoCollection<Document> createMongoCollection() {
-		MongoCollection<Document> collecion = MongoClients.create(MONGO_URI).getDatabase("data")
-				.withCodecRegistry(CodecRegistries.fromRegistries(MongoClientSettings.getDefaultCodecRegistry(),
-						CodecRegistries.fromProviders(PojoCodecProvider.builder().automatic(true).build())))
-				.getCollection("Students");
-		return collecion;
 	}
 
 	public static String getBody(HttpServletRequest request) throws Exception {

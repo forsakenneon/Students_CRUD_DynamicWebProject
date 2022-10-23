@@ -37,17 +37,14 @@ public class StudentService {
 			String firstName = gson.fromJson(jsonstudent, Student.class).getFirstName().toString();
 			String middleName = gson.fromJson(jsonstudent, Student.class).getMiddleName().toString();
 			String lastName = gson.fromJson(jsonstudent, Student.class).getLastName().toString();
-			Student student = Student.builder()
-					.id(Utils.generateId())
-					.firstName(firstName)
-					.middleName(middleName)
+			Student student = Student.builder().id(Utils.generateId()).firstName(firstName).middleName(middleName)
 					.lastName(lastName).build();
 			connection.getCollection().insertOne(student);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static void updateOne(HttpServletRequest request) {
 		try {
 			String jsonstudent;
@@ -63,11 +60,11 @@ public class StudentService {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static void deleteOne(HttpServletRequest request) {
 		try {
 			String getid;
-			getid = Utils.getBody(request); 
+			getid = Utils.getBody(request);
 			String id = gson.fromJson(getid, Student.class).get_id().toString();
 			connection.getCollection().deleteOne(new Document("_id", id));
 		} catch (Exception e) {
