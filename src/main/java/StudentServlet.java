@@ -14,23 +14,23 @@ public class StudentServlet extends HttpServlet {
 	public StudentServlet() {
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		List<Student> students = StudentService.getAll();
 		response.getWriter().println(students);
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		StudentService.addOne(request);
 	}
 
-	protected void doPut(HttpServletRequest request, HttpServletResponse response)
+	public void doPut(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		StudentService.updateOne(request);
 	}
 
-	protected void doDelete(HttpServletRequest request, HttpServletResponse response)
+	public void doDelete(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		StudentService.deleteOne(request);
 	}

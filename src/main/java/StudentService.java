@@ -3,25 +3,24 @@ import java.util.List;
 
 import org.bson.Document;
 
-import com.google.gson.Gson;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.model.Updates;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.Data;
+import lombok.var;
 
 @Data
 public class StudentService {
 	private static MongoConnection connection = new MongoConnection();
-	private static Gson gson = new Gson();
 
 	public static List<Student> getAll() {
 		MongoCursor<Document> cursor = Utils.createMongoCursor();
-		List<Student> students = new ArrayList<Student>();
+		var students = new ArrayList<Student>();
 		try {
 			while (cursor.hasNext()) {
 				String jsonStudent = cursor.next().toJson();
-				Student student = gson.fromJson(jsonStudent, Student.class);
+				Student student = JsonUtil.getGson().fromJson(jsonStudent, Student.class);
 				students.add(student);
 			}
 		} finally {
@@ -34,11 +33,8 @@ public class StudentService {
 		try {
 			String jsonstudent;
 			jsonstudent = Utils.getBody(request);
-			String firstName = gson.fromJson(jsonstudent, Student.class).getFirstName().toString();
-			String middleName = gson.fromJson(jsonstudent, Student.class).getMiddleName().toString();
-			String lastName = gson.fromJson(jsonstudent, Student.class).getLastName().toString();
-			Student student = Student.builder().id(Utils.generateId()).firstName(firstName).middleName(middleName)
-					.lastName(lastName).build();
+			Student student = JsonUtil.getGson().fromJson(jsonstudent, Student.class);
+			student.setId(Utils.generateId());
 			connection.getCollection().insertOne(student);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -49,10 +45,10 @@ public class StudentService {
 		try {
 			String jsonstudent;
 			jsonstudent = Utils.getBody(request);
-			String id = gson.fromJson(jsonstudent, Student.class).get_id().toString();
-			String firstName = gson.fromJson(jsonstudent, Student.class).getFirstName().toString();
-			String middleName = gson.fromJson(jsonstudent, Student.class).getMiddleName().toString();
-			String lastName = gson.fromJson(jsonstudent, Student.class).getLastName().toString();
+			String id = JsonUtil.getGson().fromJson(jsonstudent, Student.class).get_id().toString();
+			String firstName = JsonUtil.getGson().fromJson(jsonstudent, Student.class).getFirstName().toString();
+			String middleName = JsonUtil.getGson().fromJson(jsonstudent, Student.class).getMiddleName().toString();
+			String lastName = JsonUtil.getGson().fromJson(jsonstudent, Student.class).getLastName().toString();
 			connection.getCollection().updateOne(new Document("_id", id), Updates.set("firstName", firstName));
 			connection.getCollection().updateOne(new Document("_id", id), Updates.set("middleName", middleName));
 			connection.getCollection().updateOne(new Document("_id", id), Updates.set("lastName", lastName));
@@ -65,7 +61,7 @@ public class StudentService {
 		try {
 			String getid;
 			getid = Utils.getBody(request);
-			String id = gson.fromJson(getid, Student.class).get_id().toString();
+			String id = JsonUtil.getGson().fromJson(getid, Student.class).get_id().toString();
 			connection.getCollection().deleteOne(new Document("_id", id));
 		} catch (Exception e) {
 			e.printStackTrace();

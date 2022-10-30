@@ -22,16 +22,14 @@ public class Utils {
 	private static final String MONGO_URI = "mongodb://localhost:29000/";
 
 	public static String generateId() {
-		String uniqueID = UUID.randomUUID().toString();
-		return uniqueID;
+		return UUID.randomUUID().toString();
 	}
 
 	public static MongoCursor<Document> createMongoCursor() {
-		MongoCursor<Document> cursor = MongoClients.create(MONGO_URI).getDatabase("data")
+		return MongoClients.create(MONGO_URI).getDatabase("data")
 				.withCodecRegistry(CodecRegistries.fromRegistries(MongoClientSettings.getDefaultCodecRegistry(),
 						CodecRegistries.fromProviders(PojoCodecProvider.builder().automatic(true).build())))
 				.getCollection("Students").find().iterator();
-		return cursor;
 	}
 
 	public static String getBody(HttpServletRequest request) throws Exception {
