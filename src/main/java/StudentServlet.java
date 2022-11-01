@@ -16,22 +16,22 @@ public class StudentServlet extends HttpServlet {
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		List<Student> students = StudentService.getAll();
+		List<Student> students = DBService.getAll();
 		response.getWriter().println(students);
 	}
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		StudentService.addOne(request);
+		DBService.addOne(request);
 	}
 
 	public void doPut(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		StudentService.updateOne(request);
+		DBService.updateOne(request);
 	}
 
 	public void doDelete(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		StudentService.deleteOne(request);
+		DBService.deleteOne(request);
 	}
 }
