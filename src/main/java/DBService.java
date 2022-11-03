@@ -32,10 +32,16 @@ public class DBService {
 
 	public static void addOne(HttpServletRequest request) {
 		try {
+			MongoCollection<Document> collection = Utils.createMongoCollection();
 			String jsonstudent = Utils.getBody(request);
-			MongoCollection<Document> student = Utils.createMongoCollection();
-		    student = JsonUtil.gson.fromJson(jsonstudent, null);
-			student.insertOne(new Document("id", Utils.generateId()));
+			String firstName = JsonUtil.fromJsontoStudent(jsonstudent).getFirstName();
+			String middleName = JsonUtil.fromJsontoStudent(jsonstudent).getMiddleName();
+			String lastName = JsonUtil.fromJsontoStudent(jsonstudent).getLastName();
+			Document document = new Document("_id", Utils.generateId());
+			document.put("firstName", firstName);
+			document.put("middleName", middleName);
+			document.put("lastName", lastName);
+			collection.insertOne(document);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

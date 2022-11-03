@@ -32,14 +32,14 @@ public class Utils {
 						CodecRegistries.fromProviders(PojoCodecProvider.builder().automatic(true).build())))
 				.getCollection("Students").find().iterator();
 	}
-	
+
 	public static MongoCollection<Document> createMongoCollection() {
 		return MongoClients.create(MONGO_URI).getDatabase("data")
 				.withCodecRegistry(CodecRegistries.fromRegistries(MongoClientSettings.getDefaultCodecRegistry(),
 						CodecRegistries.fromProviders(PojoCodecProvider.builder().automatic(true).build())))
 				.getCollection("Students");
 	}
-	
+
 	public static String getBody(HttpServletRequest request) throws Exception {
 		String body = null;
 		StringBuilder stringBuilder = new StringBuilder();
