@@ -21,7 +21,7 @@ public class DBService {
 		try {
 			while (cursor.hasNext()) {
 				String jsonStudent = cursor.next().toJson();
-				Student student = JsonUtil.getGson().fromJson(jsonStudent, Student.class);
+				Student student = JsonUtil.gson.fromJson(jsonStudent, Student.class);
 				students.add(student);
 			}
 		} finally {
@@ -33,9 +33,9 @@ public class DBService {
 	public static void addOne(HttpServletRequest request) {
 		try {
 			String jsonstudent = Utils.getBody(request);
-			Student student = JsonUtil.getGson().fromJson(jsonstudent, Student.class);
-			student.setId(Utils.generateId());
-			connection.getCollection().insertOne(student);
+			MongoCollection<Document> student = Utils.createMongoCollection();
+		    student = JsonUtil.gson.fromJson(jsonstudent, null);
+			student.insertOne(new Document("id", Utils.generateId()));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -44,10 +44,10 @@ public class DBService {
 	public static void updateOne(HttpServletRequest request) {
 		try {
 			String jsonstudent = Utils.getBody(request);
-			String id = JsonUtil.getGson().fromJson(jsonstudent, Student.class).get_id().toString();
-			String firstName = JsonUtil.getGson().fromJson(jsonstudent, Student.class).getFirstName().toString();
-			String middleName = JsonUtil.getGson().fromJson(jsonstudent, Student.class).getMiddleName().toString();
-			String lastName = JsonUtil.getGson().fromJson(jsonstudent, Student.class).getLastName().toString();
+			String id = JsonUtil.fromJsontoStudent(jsonstudent).get_id();
+			String firstName = JsonUtil.fromJsontoStudent(jsonstudent).getFirstName();
+			String middleName = JsonUtil.fromJsontoStudent(jsonstudent).getMiddleName();
+			String lastName = JsonUtil.fromJsontoStudent(jsonstudent).getLastName();
 			MongoCollection<Student> collection = connection.getCollection();
 			collection.updateOne(new Document("_id", id), Updates.set("firstName", firstName));
 			collection.updateOne(new Document("_id", id), Updates.set("middleName", middleName));
@@ -60,7 +60,7 @@ public class DBService {
 	public static void deleteOne(HttpServletRequest request) {
 		try {
 			String getid = Utils.getBody(request);
-			String id = JsonUtil.getGson().fromJson(getid, Student.class).get_id().toString();
+			String id = JsonUtil.gson.fromJson(getid, Student.class).get_id().toString();
 			connection.getCollection().deleteOne(new Document("_id", id));
 		} catch (Exception e) {
 			e.printStackTrace();
