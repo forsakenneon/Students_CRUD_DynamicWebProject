@@ -10,7 +10,8 @@
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry kind="lib" path="/home/oleksandr/eclipse-workspace/Servers/apache-tomcat-10.0.23/lib/servlet-api.jar"/>
 	<classpathentry kind="lib" path="/home/oleksandr/for eclipse/mongo-java-driver-3.12.11.jar"/>
-	<classpathentry kind="lib" path="/home/oleksandr/Downloads/lombok.jar"/>
 	<classpathentry kind="lib" path="/home/oleksandr/for eclipse/jar_files (1)/gson-2.8.2.jar"/>
+	<classpathentry kind="lib" path="/home/oleksandr/for eclipse/lombok.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

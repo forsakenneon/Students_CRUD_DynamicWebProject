@@ -15,8 +15,13 @@ public class StudentServlet extends HttpServlet {
 	}
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		List<Student> students = DBService.getAll();
-		response.getWriter().println(students);
+		List<Student> students;
+		try {
+			students = DBService.getAll();
+			response.getWriter().println(students);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
