@@ -31,7 +31,6 @@ public class DBService {
 			Student student = JsonUtil.fromJsontoStudent(jsonStudent);
 			var document = new Document("_id", StudentUtils.generateId());
 
-			document.putAll(document);
 			document.put("firstName", student.getFirstName());
 			document.put("middleName", student.getMiddleName());
 			document.put("lastName", student.getLastName());
