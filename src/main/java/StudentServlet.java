@@ -1,5 +1,4 @@
 import java.io.IOException;
-import java.util.List;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -12,28 +11,49 @@ public class StudentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	public StudentServlet() {
+		super();
 	}
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		List<Student> students;
 		try {
-			students = DBService.getAll();
-			response.getWriter().println(students);
+			response.setContentType("text/html");
+			response.getWriter().println("<h1>" + DBService.getAll() + "</h1>");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		DBService.addOne(request);
+		try {
+			String jsonstudent = HTTPUtils.getBody(request);
+			DBService.addOne(jsonstudent);
+			response.setContentType("text/html");
+			response.getWriter().println("<h1>" + "Added Student:" + jsonstudent + "</h1>");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		DBService.updateOne(request);
+		try {
+			String jsonstudent = HTTPUtils.getBody(request);
+			DBService.updateOne(jsonstudent);
+			response.setContentType("text/html");
+			response.getWriter().println("<h1>" + "Updated Student:" + jsonstudent + "</h1>");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void doDelete(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		DBService.deleteOne(request);
+		try {
+			String jsonstudent = HTTPUtils.getBody(request);
+			DBService.deleteOne(jsonstudent);
+			response.setContentType("text/html");
+			response.getWriter().println("<h1>" + "Deleted student with id:" + jsonstudent + "</h1>");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

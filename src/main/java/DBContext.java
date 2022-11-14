@@ -18,18 +18,11 @@ public class DBContext {
 				.getCollection(collectionName, collectionType);
 	}
 
-	public static <T> MongoCursor<Document> createMongoCursor(String dbName, String collectionName,
+	public static <T> MongoCursor<Document> fetchCollectionCursor(String dbName, String collectionName,
 			Class<T> collectionType) {
 		return MongoClients.create(MONGO_URI).getDatabase("data")
 				.withCodecRegistry(CodecRegistries.fromRegistries(MongoClientSettings.getDefaultCodecRegistry(),
 						CodecRegistries.fromProviders(PojoCodecProvider.builder().automatic(true).build())))
 				.getCollection("Students").find().iterator();
-	}
-
-	public static MongoCollection<Document> createDocument(String dbName, String collectionName) {
-		return MongoClients.create(MONGO_URI).getDatabase(dbName)
-				.withCodecRegistry(CodecRegistries.fromRegistries(MongoClientSettings.getDefaultCodecRegistry(),
-						CodecRegistries.fromProviders(PojoCodecProvider.builder().automatic(true).build())))
-				.getCollection(collectionName);
 	}
 }
