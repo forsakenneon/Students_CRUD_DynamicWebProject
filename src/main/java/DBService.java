@@ -1,5 +1,8 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.bson.Document;
 
@@ -30,10 +33,13 @@ public class DBService {
 			MongoCollection<Document> collection = DBContext.fetchCollection("data", "Students", Document.class);
 			Student student = JsonUtil.fromJsontoStudent(jsonStudent);
 			var document = new Document("_id", StudentUtils.generateId());
-
-			document.put("firstName", student.getFirstName());
-			document.put("middleName", student.getMiddleName());
-			document.put("lastName", student.getLastName());
+			Map<String, String> map = Stream.of(new String[][] {
+				  { "firstName", student.getFirstName() }, 
+				  { "middleName", student.getMiddleName() }, 
+				  { "lastName", student.getLastName() }, 
+				}).collect(Collectors.toMap(data -> data[0], data -> data[1]));
+			
+			document.putAll(map);
 			collection.insertOne(document);
 
 		} catch (Exception e) {
