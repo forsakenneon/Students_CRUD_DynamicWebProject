@@ -20,9 +20,9 @@ public class DBContext {
 
 	public static <T> MongoCursor<Document> fetchCollectionCursor(String dbName, String collectionName,
 			Class<T> collectionType) {
-		return MongoClients.create(MONGO_URI).getDatabase("data")
+		return MongoClients.create(MONGO_URI).getDatabase(dbName)
 				.withCodecRegistry(CodecRegistries.fromRegistries(MongoClientSettings.getDefaultCodecRegistry(),
 						CodecRegistries.fromProviders(PojoCodecProvider.builder().automatic(true).build())))
-				.getCollection("Students").find().iterator();
+				.getCollection(collectionName).find().iterator();
 	}
 }
